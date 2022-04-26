@@ -1,0 +1,122 @@
+.text-dark {
+  min-height: 300px;
+}
+
+.edit-area {
+  height: 200px;
+  padding: 5px;
+  resize: none;
+}
+
+.form-size,
+.form-family,
+.form-color,
+.form-style {
+  width: 720px;
+  display: flex;
+  flex-direction: row;
+}
+
+span {
+  font-weight: bold;
+}
+
+#fontFamily {
+  width: 25%;
+}
+
+.colors,
+.bgcolors {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  top: 471px;
+  right: 259px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.color-box,
+.bgcolor-box {
+  width: 50px;
+  height: 50px;
+
+}
+
+.green {
+  background-color: green;
+}
+
+.silver {
+  background-color: silver;
+}
+
+.purple {
+  background-color: purple;
+}
+
+.moccasin {
+  background-color: moccasin;
+}
+
+.aqua {
+  background-color: aqua;
+}
+
+.magenta {
+  background-color: magenta;
+}
+
+.teal {
+  background-color: teal;
+}
+
+.peru {
+  background-color: peru;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.df {
+  display: flex;
+}
+
+.addElem input[type="text"], .addElem input[type="number"]  {
+  background-color: inherit;
+  height: 25px;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0; 
+}
+.w-1 {
+  width: 35px;
+}
+
+.w-10 {
+  width: 55px;
+  padding: 0 0 0 2px;
+  height: 25px;
+}
+
+.addElem {
+  margin-left: 300px;
+}
+
+p {
+  display: inline;
+  margin: 0 5px;
+}
+
+.inOneRow,
+.create-table {
+  display: flex;
+  flex-direction: row;
+}
+
+.container {
+  background-color: rgb(246, 246, 246);
+}

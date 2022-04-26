@@ -1,0 +1,12 @@
+.block {
+  font-size: 1.2em;
+  line-height: 1.5em;
+  height: 300px;
+  border-radius: 5px;
+  padding: 20px;
+  overflow: auto;
+  font-family: 'Times New Roman', Times, serif;
+}
+.container{
+  background-color: rgb(246, 246, 246);
+}

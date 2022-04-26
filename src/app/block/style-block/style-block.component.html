@@ -1,0 +1,107 @@
+<div class="container text-dark border mt-3 rounded">
+  <!-- block for add change in text -->
+  <div class="container mt-4" *ngIf="isEdit">
+    <textarea class="form-control edit-area " [(ngModel)]="editArea"></textarea>
+    <input type="button" value="add" class="btn btn-danger me-3 mt-3" (click)="Add()">
+    <input type="button" value="save" class="btn btn-success mt-3" (click)="Save()">
+  </div>
+
+  <!-- add table -->
+  <div class="my-3 auto addElem" *ngIf="addElem">
+    <h2>Choose what to add:</h2>
+    <div class="df mt-4">
+      <input (click)="addItem(table)" type="radio" name="item" value="table" id="table" class="form-check-input"
+        checked>
+      <label for="table" class="form-check-label mx-2">{{table}}</label>
+      <input (click)="addItem(list)" type="radio" name="item" value="list" id="list" class="form-check-input">
+      <label for="list" class="form-check-label mx-2">{{list}}</label></div>
+    <div class="create-table" *ngIf="isTable">
+      <form name="form-table">
+        <div class="df my-2">
+          <p>Input count of row:</p>
+          <input type="number" name="count" class="border-0 border-dark border-bottom w-1" [(ngModel)]="countRow">
+        </div>
+        <p>Input count of cell:</p>
+        <input type="number" name="count" class="border-0 border-dark border-bottom w-1" [(ngModel)]="countCell">
+        <h3 class="my-4">Table style:</h3>
+        <div class="df my-2">
+          <p>Input width of cell:</p>
+          <input type="number" name="count" class="border-0 border-dark border-bottom w-1" [(ngModel)]="widthCell">
+        </div>
+        <p>Input height of cell:</p>
+        <input type="number" name="count" class="border-0 border-dark border-bottom w-1" [(ngModel)]="heightCell">
+        <div class="inOneRow mt-3">
+          <p>Border width</p>
+          <input type="number" name="count" class="border-0 border-dark border-bottom w-1" [(ngModel)]="borderWidth">
+          <p>Border type:</p>
+          <select name="type" class="form-control w-10" name="borderType" [(ngModel)]="selectedBorderType"
+            (change)="onChangeBorderType($event)">
+            <option *ngFor="let type of borderTypes" [value]="type">{{type}}</option>
+          </select>
+          <p>Border color:</p>
+          <select name="type" class="form-control w-10" name="borderColor" [(ngModel)]="selectedBorderColor"
+            (change)="onChangeBorderColor($event)">
+            <option *ngFor="let color of borderColors" [value]="color">{{color}}</option>
+          </select>
+        </div>
+        <input type="button" value="Create" name="create" class="btn btn-secondary mt-4" (click)="createTable()">
+      </form>
+    </div>
+
+    <!-- add list -->
+    <div class="my-3 form-list" *ngIf="isList">
+      <form name="form-list">
+        <p>Input count of list items:</p>
+        <input type="number" name="count" class="border-0 border-dark border-bottom w-1" [(ngModel)]="countLi">
+        <div class="inOneRow mt-3">
+          <p>Type of mark:</p>
+          <select name="type" class="form-control w-10" name="selectedType" [(ngModel)]="selectedType"
+            (change)="onChangeType($event)">
+            <option *ngFor="let type of typeLi" [value]="type">{{type}}</option>
+          </select>
+        </div>
+        <input type="button" value="Create" name="create" class="btn btn-secondary mt-4" (click)="createList()">
+      </form>
+    </div>
+  </div>
+  <!--block for add style -->
+  <div class="container style-block" *ngIf="isStyle">
+    <form #form="ngForm">
+      <div class="form-size mt-5 mx-auto"><span class="me-3">Font Size:</span>
+        <div *ngFor="let size of fontSizes" class="me-3">
+          <input (click)="SizeStyle(size)" type="radio" name="size" value="{{size}}pt" id="{{size}}"
+            class="form-check-input">
+          <label for="{{size}}" class="form-check-label mx-2">{{size}}pt</label>
+        </div>
+      </div>
+      <div class="form-family mt-4 mx-auto">
+        <span class="me-4 mt-2">Font Family:</span>
+        <select id="fontFamily" class="form-control" name="selectedQuantity" [(ngModel)]="selectedQuantity"
+          (change)="FamilyStyle($event)">
+          <option *ngFor="let ffamily of fontFamily" [value]="ffamily">{{ffamily}}</option>
+        </select>
+      </div>
+      <div class="form-color mt-4 mx-auto">
+        <span class="me-3 mt-1">Colors:</span>
+        <input type="button" value="Color" class="btn btn-secondary me-3" (click)="Color()">
+        <div class="colors" *ngIf="colorBlock">
+          <div *ngFor="let color of colors">
+            <div class="bgcolor-box" [ngClass]="color" (click)="ColorStyle(color)"></div>
+          </div>
+        </div>
+        <input type="button" value="BgColor" class="btn btn-secondary" (click)="bgColor()">
+        <div class="bgcolors" *ngIf="bgcolorBlock">
+          <div *ngFor="let color of colors">
+            <div class="bgcolor-box" [ngClass]="color" (click)="BgColorStyle(color)"></div>
+          </div>
+        </div>
+      </div>
+      <div class="form-style mt-4 mx-auto">
+        <span class="me-3">Style:</span>
+        <div *ngFor="let style of textDecor" class="me-3"> <input type="checkbox" class="form-check-input"
+            id="{{style}}" (change)='WeightStyle($event,style)'>
+          <label for="{{style}}" class="form-check-label mx-2">{{style}} text</label></div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="container mt-3 mx-auto" *ngIf="!visible">
+  <input type="button" value="edit" class="btn btn-warning" (click)="getEdit()">
+  <input type="button" value="style" class="btn btn-info ms-3" (click)="getStyle()">
+</div>
+
+<app-style-block [isEdit]="isEdit" [isStyle]="isStyle" [text]="text" (outToParentText)='receiveFromChildText($event)'
+  (outToParentSize)="receiveFromChildSize($event)" (outToParentFamily)="receiveFromChildFamily($event)"
+  (outToParentColor)="receiveFromChildColor($event)" (outToParentBgColor)="receiveFromChildBgColor($event)"
+  (outToParentWeight)="receiveFromChildWeight($event)" (outToParentStyle)="receiveFromChildStyle($event)"
+  (outToParentVisible)="receiveFromChildVisible($event)" (outToParentTable)="receiveFromChildTable2($event)">
+</app-style-block>
