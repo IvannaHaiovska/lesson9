@@ -25,6 +25,8 @@ export class ButtonBlockComponent implements OnInit {
   @Output()
   public outToParentStyle2 = new EventEmitter();
   @Output()
+  public outToParentDecor2 = new EventEmitter();
+  @Output()
   public outToParentVisible = new EventEmitter();
   @Output()
   public outToParentTable2 = new EventEmitter();
@@ -33,7 +35,9 @@ export class ButtonBlockComponent implements OnInit {
   public isEdit = false;
   public isStyle = false;
   public visible!: boolean;
-
+  public block = false;
+  public password!: any;
+  public incorrectPassword = false;
   constructor() { }
   ngOnInit(): void {
   }
@@ -45,6 +49,19 @@ export class ButtonBlockComponent implements OnInit {
   getStyle(): void {
     this.isStyle = !this.isStyle;
     this.isEdit = false;
+  }
+  getBlock() {
+    this.block = true;
+  }
+  Unblock() {
+    if (this.password === '1111aaaa') {
+      this.block = false;
+      this.incorrectPassword = false;
+    }
+    else {
+      this.incorrectPassword = true;
+    }
+    this.password = '';
   }
   receiveFromChildText(event: string) {
     this.outToParentText2.emit(event);
@@ -70,6 +87,9 @@ export class ButtonBlockComponent implements OnInit {
   }
   receiveFromChildStyle(event: string) {
     this.outToParentStyle2.emit(event);
+  }
+  receiveFromChildDecor(event: string) {
+    this.outToParentDecor2.emit(event);
   }
   receiveFromChildVisible(event: boolean) {
     this.visible = event;

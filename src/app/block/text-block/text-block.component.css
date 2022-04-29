@@ -1,12 +1,24 @@
-.block {
+.container {
+  width: 80%;
+  margin: 0 auto;
   font-size: 1.2em;
   line-height: 1.5em;
   height: 300px;
   border-radius: 5px;
-  padding: 20px;
-  overflow: auto;
   font-family: 'Times New Roman', Times, serif;
+  background-color: rgb(60, 60, 60);
+  padding: 20px;
 }
-.container{
-  background-color: rgb(246, 246, 246);
+
+.top-block {
+  height: 260px;
+  padding: 20px;
+  border-radius: 5px;
+  overflow: auto;
+  background-color: rgb(112, 112, 125);
+  color: rgb(240, 240, 240);
+}
+
+.top-block p {
+  margin: 10px 0;
 }

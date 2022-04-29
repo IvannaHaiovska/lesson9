@@ -1,11 +1,23 @@
-<div class="container mt-3 mx-auto" *ngIf="!visible">
-  <input type="button" value="edit" class="btn btn-warning" (click)="getEdit()">
-  <input type="button" value="style" class="btn btn-info ms-3" (click)="getStyle()">
+<div class="center-block" *ngIf="!visible">
+  <input type="button" value="Редагувати" class="btn" (click)="getEdit()">
+  <input type="button" value="Стилізувати" class="btn" (click)="getStyle()">
+  <input type="button" value="Блокувати" class="btn" (click)="getBlock()">
 </div>
 
-<app-style-block [isEdit]="isEdit" [isStyle]="isStyle" [text]="text" (outToParentText)='receiveFromChildText($event)'
-  (outToParentSize)="receiveFromChildSize($event)" (outToParentFamily)="receiveFromChildFamily($event)"
-  (outToParentColor)="receiveFromChildColor($event)" (outToParentBgColor)="receiveFromChildBgColor($event)"
-  (outToParentWeight)="receiveFromChildWeight($event)" (outToParentStyle)="receiveFromChildStyle($event)"
+<div class="modal-block" *ngIf="block">
+  <h2>Програму заблоковано. Введіть пароль</h2>
+  <div class="enter-block">
+    <input type="password" class="password" [(ngModel)]="password">
+    <span *ngIf="incorrectPassword">Пароль не вірний</span>
+    <input type="button" value="Розблокувати" class="btn blockBtn" (click)="Unblock()">
+  </div>
+</div>
+<div class="black-block" *ngIf="block"></div>
+
+<app-style-block *ngIf="isStyle || isEdit" [isEdit]="isEdit" [isStyle]="isStyle" [text]="text"
+  (outToParentText)='receiveFromChildText($event)' (outToParentSize)="receiveFromChildSize($event)"
+  (outToParentFamily)="receiveFromChildFamily($event)" (outToParentColor)="receiveFromChildColor($event)"
+  (outToParentBgColor)="receiveFromChildBgColor($event)" (outToParentWeight)="receiveFromChildWeight($event)"
+  (outToParentStyle)="receiveFromChildStyle($event)" (outToParentDecor)="receiveFromChildDecor($event)"
   (outToParentVisible)="receiveFromChildVisible($event)" (outToParentTable)="receiveFromChildTable2($event)">
 </app-style-block>

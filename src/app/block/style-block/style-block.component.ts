@@ -1,4 +1,9 @@
-import { Component, OnInit, Input, EventEmitter, Output, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ElementRef } from '@angular/core';
+
+
+import { List } from 'src/app/shared/interface/list/list';
+import { Table } from 'src/app/shared/interface/table/table';
+import { Style } from 'src/app/shared/interface/style/style';
 
 @Component({
   selector: 'app-style-block',
@@ -13,7 +18,7 @@ export class StyleBlockComponent implements OnInit {
   @Output()
   public outToParentText = new EventEmitter();
   @Output()
-  public outToParentSize = new EventEmitter(); 
+  public outToParentSize = new EventEmitter();
   @Output()
   public outToParentFamily = new EventEmitter();
   @Output()
@@ -25,54 +30,76 @@ export class StyleBlockComponent implements OnInit {
   @Output()
   public outToParentStyle = new EventEmitter();
   @Output()
+  public outToParentDecor = new EventEmitter();
+  @Output()
   public outToParentVisible = new EventEmitter();
 
- 
+  public tagBtn = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a'];
   public editArea!: string;
   public editText!: string;
   public colorBlock = false;
   public bgcolorBlock = false;
   public addElem = false;
-  public countLi!: number;
-  public selectedType = 'circle';
-  public typeLi = ['circle', 'disc', 'square']
+  public listForm: List = {
+    countLi: '',
+    typeLiUl: ['circle', 'disc', 'square'],
+    typeLiOl: ['decimal',
+      'upper-roman', 'lower-alpha', 'upper-alpha', 'lower-greek']
+  };
+  public selectedTypeUl = 'circle';
+  public selectedTypeOl = 'decimal';
   public type!: string;
   public createNewList!: string;
-  public countRow!: number;
-  public countCell!: number;
-  public widthCell!: number;
-  public heightCell!: number;
-  public borderWidth!: number;
+
+  public tableForm: Table = {
+    countRow: '',
+    countCell: '',
+    widthCell: '',
+    heightCell: '',
+    borderWidth: '',
+    borderTypes: ['solid', 'dashed', 'dotted', 'double'],
+    borderColors: '#775035e6'
+  };
   public selectedBorderType = 'solid';
-  public borderTypes = ['solid', 'dashed', 'dotted', 'double'];
   public bType!: string;
   public selectedBorderColor = 'black';
-  public borderColors = ['black', 'red', 'blue', 'green'];
   public borderColor!: string;
   public createNewTable!: string;
+  public example = '';
+  public closeExample = true;
 
-  public fontSizes = [12, 14, 16, 18, 20];
+  public styleForm: Style = {
+    fontSize: [12, 14, 16, 18, 20, 22, 24],
+    fontFamily: ['Times New Roman', 'Arial', 'Verdana', 'monospace', 'Gill Sans'],
+    bgcolor: "#71717e",
+    color: "#f0f0f0",
+    textDecor: ['Жирний', 'Курсив', 'Підкреслений']
+  }
+  public addList = false;
+  public listType!: any;
+  public ol = 'ol';
+  public ul = 'ul';
+  public isOl = false;
+  public isUl = false;
   public isTable = true;
   public isList = false;
   public table = 'table';
   public list = 'list';
-  public textDecor = ['bold', 'italic']
-  public colors = ['green', 'silver', 'purple', 'moccasin', 'aqua', 'magenta', 'teal', 'peru', 'yellow'];
-  public fontFamily = ['Times New Roman', 'Arial', 'Verdana', 'monospace', 'Gill Sans'];
   public selectedQuantity = 'Times New Roman';
 
-  constructor(
-    private eRef: ElementRef,
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.editArea = this.text;
   }
+  Tag(tag: string) {
+    this.editArea += `<${tag}></${tag}>`
+  }
   Add() {
     this.addElem = !this.addElem;
-    this.outToParentVisible.emit(this.addElem);
     this.isEdit = false;
   }
+
   addItem(item: string) {
     if (item == 'table') {
       this.isTable = !this.isTable;
@@ -83,57 +110,89 @@ export class StyleBlockComponent implements OnInit {
       this.isTable = false;
     }
   }
+
+  addTypeList(item: any) {
+    if (item == 'ol') {
+      this.listType = 'ol';
+      this.isOl = true;
+      this.isUl = false;
+    }
+    else if (item == 'ul') {
+      this.listType = 'ul';
+      this.isOl = false;
+      this.isUl = true;
+    }
+    this.addList = true;
+  }
+
+
   onChangeBorderType(type: any) {
     this.bType = type.target.value;
   }
-  onChangeBorderColor(type: any) {
-    this.borderColor = type.target.value;
+  onChangeBorderColor() {
+    this.borderColor = this.tableForm.borderColors;
   }
-
-  createTable() {
+  createT() {
     this.createNewTable = `<table>`
-    for (let i = 0; i < this.countRow; i++) {
+    for (let i = 0; i < this.tableForm.countRow; i++) {
       this.createNewTable += `<tr>`;
-      for (let j = 0; j < this.countCell; j++) {
-        this.createNewTable += `<td style = "width: ${this.widthCell}px; height: ${this.heightCell}px; border: ${this.borderWidth}px ${this.bType || this.selectedBorderType} ${this.borderColor || this.selectedBorderColor}"></td>`;
+      for (let j = 0; j < this.tableForm.countCell; j++) {
+        this.createNewTable += `<td style = "width: ${this.tableForm.widthCell}px; height: ${this.tableForm.heightCell}px; border: ${this.tableForm.borderWidth}px ${this.bType || this.selectedBorderType} ${this.borderColor || this.selectedBorderColor}"></td>`;
       }
       this.createNewTable += '</tr>'
     }
     this.createNewTable += '</table>';
+  }
+  createL() {
+    this.createNewList = `<${this.listType} style=" list-style-type:${this.type || this.selectedTypeUl || this.selectedTypeOl}">`
+    for (let i = 0; i < this.listForm.countLi; i++) {
+      this.createNewList += `<li></li>`;
+    }
+    this.createNewList += `</${this.listType}>`
+  }
+  Example() {
+    this.closeExample = true;
+    this.createT();
+    this.example += this.createNewTable;
+    this.createL();
+    this.example += this.createNewList;
+  }
+  CloseExample() {
+    this.closeExample = false;
+    this.example = '';
+  }
+  createTable() {
+    this.createT();
     this.editArea += this.createNewTable;
     this.isEdit = true;
     this.addElem = false;
-    this.outToParentVisible.emit(this.addElem);
-
+    this.example = '';
+    this.tableForm = {
+      countRow: '',
+      countCell: '',
+      widthCell: '',
+      heightCell: '',
+      borderWidth: '',
+      borderTypes: ['solid', 'dashed', 'dotted', 'double'],
+      borderColors: '#775035e6'
+    };
   }
+
+
   onChangeType(type: any) {
     this.type = type.target.value;
   }
   createList() {
-    this.createNewList = `<ul style=" list-style-type:${this.type || this.selectedType}">`
-    for (let i = 0; i < this.countLi; i++) {
-      this.createNewList += `<li>item ${i + 1}</li>`;
-    }
-    this.createNewList += `</ul>`
+    this.createL();
     this.editArea += this.createNewList;
     this.isEdit = true;
     this.addElem = false;
-    this.isTable = true;
-    this.isList = false;
-    this.outToParentVisible.emit(this.addElem);
+    this.example = '';
+    this.listForm.countLi = '';
   }
   Save() {
     this.editText = this.editArea;
-    this.isEdit = false;
     this.outToParentText.emit(this.editText);
-  }
-  Color() {
-    this.colorBlock = !this.colorBlock;
-    this.bgcolorBlock = false;
-  }
-  bgColor() {
-    this.bgcolorBlock = !this.bgcolorBlock;
-    this.colorBlock = false
   }
 
   SizeStyle(size: any) {
@@ -142,36 +201,38 @@ export class StyleBlockComponent implements OnInit {
   FamilyStyle(ffamily: any) {
     this.outToParentFamily.emit(ffamily.target.value);
   }
-  ColorStyle(color: any) {
-    this.outToParentColor.emit(color);
+
+  ColorStyle() {
+    this.outToParentColor.emit(this.styleForm.color);
   }
-  BgColorStyle(bgcolor: string) {
-    this.outToParentBgColor.emit(bgcolor);
+
+  BgColorStyle() {
+    this.outToParentBgColor.emit(this.styleForm.bgcolor);
   }
   WeightStyle(event: any, st: string) {
     if (event.target.checked === true) {
       this.colorBlock = false;
       this.bgcolorBlock = false;
-      if (st === 'bold') {
-        this.outToParentWeight.emit(st);
+      if (st === 'Жирний') {
+        this.outToParentWeight.emit('bold');
       }
-      else if (st === 'italic') {
-        this.outToParentStyle.emit(st);
+      else if (st === 'Курсив') {
+        this.outToParentStyle.emit('italic');
+      }
+      else if (st === 'Підкреслений') {
+        this.outToParentDecor.emit('underline');
       }
     }
-    else if ((st === 'bold') && (event.target.checked === false)) {
+    else if ((st === 'Жирний') && (event.target.checked === false)) {
       this.outToParentWeight.emit('');
     }
-    else {
+    else if ((st === 'Курсив') && (event.target.checked === false)) {
       this.outToParentStyle.emit('');
+    }
+    else {
+      this.outToParentDecor.emit('');
     }
   }
 
-  @HostListener('document:click', ['$event'])
-  clickout(event: any) {
-    if (!this.eRef.nativeElement.contains(event.target)) {
-      this.colorBlock = false;
-      this.bgcolorBlock = false;
-    }
-  }
+
 }

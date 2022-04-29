@@ -1,11 +1,14 @@
-<div *ngIf="!visible" class="container border block" [innerHTML]="text | safeHtml"
-  [ngStyle]="{'font-size.pt':size, 'font-family': ffamily, 'color':color, 'background-color':bgColor, 'font-weight':weight, 'font-style':style}">
-  {{text}}
+<div class="container">
+  <div *ngIf="!visible" class="top-block" [innerHTML]="text | safeHtml" [ngStyle]="{'font-size.pt':size, 'font-family': ffamily, 'color':color, 'background-color':bgColor, 'font-weight':weight, 'font-style':style,
+  'text-decoration':decor}">
+    {{text}}
+  </div>
 </div>
 
 <app-button-block [text]="text" (outToParentText2)='receiveFromChildText($event)'
   (outToParentSize2)='receiveFromChildSize($event)' (outToParentFamily2)='receiveFromChildFamily($event)'
   (outToParentColor2)='receiveFromChildColor($event)' (outToParentBgColor2)='receiveFromChildBgColor($event)'
   (outToParentWeight2)='receiveFromChildWeight($event)' (outToParentStyle2)='receiveFromChildStyle($event)'
-  (outToParentVisible)="receiveFromChildVisible($event)" (outToParentTable2)="receiveFromChildTable2($event)">
+  (outToParentDecor2)='receiveFromChildDecor($event)' (outToParentVisible)="receiveFromChildVisible($event)"
+  (outToParentTable2)="receiveFromChildTable2($event)">
 </app-button-block>

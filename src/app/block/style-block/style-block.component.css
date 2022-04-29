@@ -1,122 +1,366 @@
-.text-dark {
-  min-height: 300px;
+.container {
+  width: 80%;
+  margin: 0 auto;
+  font-size: 1.2em;
+  line-height: 1.5em;
+  min-height: 350px;
+  border-radius: 5px;
+  font-family: sans-serif;
+  background-color: rgb(60, 60, 60);
+  padding: 20px;
+}
+
+/*style for block add change in text  */
+.bottom-block {
+  margin-top: 10px;
+  width: 100%;
+  height: 300px;
+}
+
+.area {
+  overflow: auto;
+  border-radius: 5px;
+  background-color: rgb(235, 235, 235);
 }
 
 .edit-area {
-  height: 200px;
-  padding: 5px;
+  min-height: 150px;
+  padding: 10px;
   resize: none;
+  background-color: inherit;
+  border: none;
+  outline: none;
+  width: 98%;
+  height: 200px;
 }
 
+.btn {
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  font-size: 0.7em;
+  background-color: rgba(119, 80, 53, 0.9);
+  color: rgb(220, 220, 220);
+  width: 80px;
+  height: 30px;
+  margin: 0 3px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.505);
+  margin-top: 15px;
+}
+
+.btn-tag {
+  width: 23px;
+  height: 23px;
+  border: none;
+}
+
+.btn:hover {
+  background-color: rgba(178, 120, 78, 0.763);
+}
+
+.tag-block {
+  width: 20%;
+  margin: 10px auto;
+}
+
+/* block for add style  */
 .form-size,
 .form-family,
 .form-color,
-.form-style {
-  width: 720px;
+.form-style,
+.form {
+  width: 99%;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  border-radius: 5px;
+  margin: 10px 0;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  position: relative;
+  color: rgb(232, 231, 231);
+  ;
+  border: 2px dotted rgb(113, 113, 126);
 }
 
-span {
-  font-weight: bold;
+.form {
+  width: 95.5%;
+  margin-left: 20px;
 }
 
-#fontFamily {
-  width: 25%;
+legend,
+span,
+label {
+  font-size: 16px;
+  display: inline;
 }
 
-.colors,
-.bgcolors {
-  width: 150px;
-  height: 150px;
-  position: absolute;
-  top: 471px;
-  right: 259px;
-  display: flex;
-  flex-wrap: wrap;
+.form-check-input {
+  margin: 0 5px 13px 25px;
 }
 
-.color-box,
-.bgcolor-box {
-  width: 50px;
-  height: 50px;
-
-}
-
-.green {
-  background-color: green;
-}
-
-.silver {
-  background-color: silver;
-}
-
-.purple {
-  background-color: purple;
-}
-
-.moccasin {
-  background-color: moccasin;
-}
-
-.aqua {
-  background-color: aqua;
-}
-
-.magenta {
-  background-color: magenta;
-}
-
-.teal {
-  background-color: teal;
-}
-
-.peru {
-  background-color: peru;
-}
-
-.yellow {
-  background-color: yellow;
-}
-
-.df {
-  display: flex;
-}
-
-.addElem input[type="text"], .addElem input[type="number"]  {
-  background-color: inherit;
+.fontFamily {
   height: 25px;
-}
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0; 
-}
-.w-1 {
-  width: 35px;
+  font-size: .8em;
 }
 
-.w-10 {
-  width: 55px;
-  padding: 0 0 0 2px;
-  height: 25px;
+.form-color span {
+  margin: 7px 5px 0 18px;
+}
+
+input[type="color"] {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: none;
+}
+
+.inOneRow input[type="color"] {
+  height: 23px;
+}
+
+.form-color .color-box,
+.form-color .bgcolor-box,
+.color-box {
+  border: 2px solid rgb(113, 113, 126);
+  height: 39px;
+  margin: 0;
+}
+
+input[type="checkbox"] {
+  margin: 8px 25px 10px 6px;
+  height: 12px;
+}
+
+
+/*  add table */
+.addElem input[type="text"],
+.addElem input[type="number"] {
+  width: 140px;
+  height: 20px;
+  padding-left: 3px;
+  position: relative;
 }
 
 .addElem {
-  margin-left: 300px;
+  width: 100%;
 }
 
-p {
-  display: inline;
-  margin: 0 5px;
+.form .inOneRow span {
+  margin: 5px 5px 0px 18px;
 }
 
-.inOneRow,
-.create-table {
+.form .inOneRow .color-box {
+  height: 24px;
+  margin: 0;
+}
+
+.form .inOneRow input[type="number"] {
+  margin-top: 9px;
+}
+
+h3 {
+  color: rgb(230, 230, 230);
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.form span {
+  margin: -3px 6px 0 28px;
+}
+
+.inOneRow {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
-.container {
-  background-color: rgb(246, 246, 246);
+.space {
+  height: 20px;
+}
+
+.example {
+  margin: 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.btnExample {
+  width: fit-content;
+  font-size: .6em;
+  padding: 0 3px;
+}
+
+.example-block {
+  min-width: 400px;
+  min-height: 270px;
+  border-radius: 15px;
+  background-color: rgb(113, 113, 126);
+  margin-right: 30%;
+}
+
+.top {
+  background-color: rgba(120, 81, 54, 0.902);
+  height: 26px;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  text-align: right;
+  padding: 0 5px;
+}
+
+.close {
+  border: none;
+  outline: none;
+  width: 15px;
+  height: 15px;
+  border-radius: .5em;
+  background-color: rgb(209, 106, 51);
+}
+
+.main {
+  margin: 5px 25px;
+}
+
+.border {
+  border-radius: 5px;
+  padding-left: 10px;
+  border: 2px solid rgb(113, 113, 126);
+}
+
+.table,
+.list {
+  outline: none;
+  background-color: inherit;
+  color: rgb(230, 230, 230);
+  border: none;
+  padding: 0 5px;
+  margin-bottom: 33px;
+  transform: skew(-20deg);
+  border-top: 2px solid rgb(113, 113, 126);
+  height: 20px;
+}
+
+.table {
+  border-left: 2px solid rgb(113, 113, 126);
+  margin-left: 4px;
+  border-top-left-radius: 5px;
+}
+
+.list {
+  margin-right: -5px;
+  border-top-right-radius: 5px;
+  border-right: 2px solid rgb(113, 113, 126);
+  margin-top: 10px;
+}
+
+.activeTable,
+.activeList {
+  border-right: 2px solid rgb(113, 113, 126);
+  border-left: 2px solid rgb(113, 113, 126);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  height: 30px;
+  margin-bottom: 29px;
+  padding-top: 0;
+  margin-left: 5px;
+}
+
+.activeList {
+  margin-bottom: 39px;
+  margin-left: 8px;
+}
+
+.noActiveTable {
+  height: 18px;
+  padding-bottom: 21px;
+  margin-right: -7px;
+}
+
+.noActiveList {
+  height: 18px;
+  padding-bottom: 23px;
+  margin-right: -5px;
+}
+
+input[type="number"]:focus,
+select:focus {
+  border: 2px solid lightskyblue;
+  outline: 2px solid lightskyblue;
+  box-shadow: 0px 0px 0px 3px rgba(135, 206, 250, 0.553);
+}
+
+input[type="number"].ng-invalid:not(form).ng-touched {
+  border: 2px solid rgba(228, 11, 11, 0.918);
+}
+
+input[type="number"].ng-valid:not(form) {
+  border: 2px solid rgb(28, 181, 28);
+}
+
+.hint {
+  position: absolute;
+  background-color: rgb(113, 113, 126);
+  color: rgb(220, 220, 220);
+  font-size: 13px;
+  top: -49px;
+  border-radius: 3px;
+  width: 150px;
+  line-height: 17px;
+  text-align: center;
+  padding: 3px;
+}
+
+.hint::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 10%;
+  margin-left: -5px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: rgb(113, 113, 126) transparent transparent transparent;
+}
+
+.widthCell {
+  left: 38%;
+}
+
+.heightCell {
+  left: 58%;
+}
+
+.borderWidth {
+  left: 36.8%;
+  top: -40px;
+}
+
+.countCell {
+  left: 38.5%;
+}
+
+.countRow {
+  left: 64%;
+}
+
+.addBtn {
+  margin-left: 45%;
+}
+
+.countLi {
+  left: 40.7%;
+}
+
+.btn-space {
+  height: 55px;
+}
+
+#ol,
+#ul {
+  margin: 9px 5px 0 29px;
+}
+
+.form-list select {
+  width: 100px;
 }

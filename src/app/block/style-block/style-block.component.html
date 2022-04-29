@@ -1,107 +1,169 @@
-<div class="container text-dark border mt-3 rounded">
+<div class="container">
   <!-- block for add change in text -->
-  <div class="container mt-4" *ngIf="isEdit">
-    <textarea class="form-control edit-area " [(ngModel)]="editArea"></textarea>
-    <input type="button" value="add" class="btn btn-danger me-3 mt-3" (click)="Add()">
-    <input type="button" value="save" class="btn btn-success mt-3" (click)="Save()">
+  <div class="bottom-block" *ngIf="isEdit">
+    <div class="area">
+      <div class="tag-block">
+        <input *ngFor="let tag of tagBtn" type="button" value="{{tag}}" class="btn btn-tag" (click)="Tag(tag)">
+      </div>
+      <textarea class="edit-area" [(ngModel)]="editArea"></textarea>
+    </div>
+    <input type="button" value="Зберегти" class="btn" (click)="Save()">
+    <input type="button" value="Додати" class="btn" (click)="Add()">
   </div>
 
   <!-- add table -->
-  <div class="my-3 auto addElem" *ngIf="addElem">
-    <h2>Choose what to add:</h2>
-    <div class="df mt-4">
-      <input (click)="addItem(table)" type="radio" name="item" value="table" id="table" class="form-check-input"
-        checked>
-      <label for="table" class="form-check-label mx-2">{{table}}</label>
-      <input (click)="addItem(list)" type="radio" name="item" value="list" id="list" class="form-check-input">
-      <label for="list" class="form-check-label mx-2">{{list}}</label></div>
-    <div class="create-table" *ngIf="isTable">
-      <form name="form-table">
-        <div class="df my-2">
-          <p>Input count of row:</p>
-          <input type="number" name="count" class="border-0 border-dark border-bottom w-1" [(ngModel)]="countRow">
-        </div>
-        <p>Input count of cell:</p>
-        <input type="number" name="count" class="border-0 border-dark border-bottom w-1" [(ngModel)]="countCell">
-        <h3 class="my-4">Table style:</h3>
-        <div class="df my-2">
-          <p>Input width of cell:</p>
-          <input type="number" name="count" class="border-0 border-dark border-bottom w-1" [(ngModel)]="widthCell">
-        </div>
-        <p>Input height of cell:</p>
-        <input type="number" name="count" class="border-0 border-dark border-bottom w-1" [(ngModel)]="heightCell">
-        <div class="inOneRow mt-3">
-          <p>Border width</p>
-          <input type="number" name="count" class="border-0 border-dark border-bottom w-1" [(ngModel)]="borderWidth">
-          <p>Border type:</p>
-          <select name="type" class="form-control w-10" name="borderType" [(ngModel)]="selectedBorderType"
-            (change)="onChangeBorderType($event)">
-            <option *ngFor="let type of borderTypes" [value]="type">{{type}}</option>
-          </select>
-          <p>Border color:</p>
-          <select name="type" class="form-control w-10" name="borderColor" [(ngModel)]="selectedBorderColor"
-            (change)="onChangeBorderColor($event)">
-            <option *ngFor="let color of borderColors" [value]="color">{{color}}</option>
-          </select>
-        </div>
-        <input type="button" value="Create" name="create" class="btn btn-secondary mt-4" (click)="createTable()">
-      </form>
-    </div>
+  <div class="addElem" *ngIf="addElem">
+    <h3>Що додамо?</h3>
+    <fieldset class="border">
+      <legend>
+        <input (click)="addItem(table)" type="button" name="item" value="Таблиця" class="table"
+          [ngClass]="{ activeTable: isTable, noActiveTable:!isTable }">
+        <input (click)="addItem(list)" type="button" name="item" value="Список" class="list"
+          [ngClass]="{ activeList: isList, noActiveList:!isList }">
+      </legend>
+      <div class="create-table" *ngIf="isTable">
+        <form name="form-table" #form="ngForm">
+          <fieldset class="form">
+            <legend>Ширина і висота комірки таблиці</legend>
+            <div class="hint widthCell"
+              *ngIf="(widthCell.dirty && widthCell.invalid) || (widthCell.touched && widthCell.invalid)">Введіть число в
+              діапазоні 1..99</div>
+            <span>Ширина</span>
+            <input type="number" name="widthCell" [(ngModel)]="tableForm.widthCell" #widthCell="ngModel" required
+              min="1" max="99">
+            <div class="hint heightCell"
+              *ngIf="(heightCell.dirty && heightCell.invalid) || (heightCell.touched && heightCell.invalid)">Введіть
+              число в діапазоні 1..99</div>
+            <span>Висота</span>
+            <input type="number" name="heightCell" [(ngModel)]="tableForm.heightCell" required #heightCell="ngModel"
+              min="1" max="99">
+          </fieldset>
+          <fieldset class="form">
+            <legend>Товщина, колір, тип лінії таблиці</legend>
+            <div class="inOneRow">
+              <div class="hint borderWidth"
+                *ngIf="(borderWidth.dirty && borderWidth.invalid) || (borderWidth.touched && borderWidth.invalid)">
+                Введіть число в діапазоні 1..99</div>
+              <span>Товщина</span>
+              <input type="number" name="borderWidth" [(ngModel)]="tableForm.borderWidth" required
+                #borderWidth="ngModel" min="1" max="99">
+              <span>Тип лінії</span>
+              <select name="type" class="form-control w-10" name="borderType" [(ngModel)]="selectedBorderType"
+                (change)="onChangeBorderType($event)">
+                <option *ngFor="let type of tableForm.borderTypes" [value]="type">{{type}}</option>
+              </select>
+              <span>Колір</span>
+              <span class="color-box">
+                <input type="color" [(ngModel)]="tableForm.borderColors" name="color"
+                  (change)="onChangeBorderColor()"></span>
+            </div>
+          </fieldset>
+          <fieldset class="form">
+            <legend>Кількість рядків і стовпців</legend>
+            <div class="hint countCell"
+              *ngIf="(countCell.dirty && countCell.invalid) || (countCell.touched && countCell.invalid)">Введіть число в
+              діапазоні 1..99</div>
+            <span>Кількість стовпців</span>
+            <input type="number" name="countCell" [(ngModel)]="tableForm.countCell" #countCell="ngModel" required
+              min="1" max="99">
+            <div class="hint countRow"
+              *ngIf="(countRow.dirty && countRow.invalid) || (countRow.touched && countRow.invalid)">Введіть число в
+              діапазоні 1..99</div>
+            <span>Кількість рядків</span>
+            <input type="number" name="countRow" [(ngModel)]="tableForm.countRow" #countRow="ngModel" required min="1"
+              max="99">
+          </fieldset>
+          <div class="btn-space">
+            <input type="button" value="Додати" name="create" class="btn addBtn" (click)="createTable()"
+              *ngIf="widthCell.valid && countCell.valid && borderWidth.valid && heightCell.valid && countRow.valid">
+          </div>
+        </form>
+      </div>
+      <!-- add list -->
+      <div class="form-list" *ngIf="isList">
+        <form name="form-list" #form="ngForm">
+          <fieldset class="form">
+            <legend>Тип списку</legend>
+            <input (click)="addTypeList(ol)" type="radio" name="type" value="ol" id="ol">
+            <label for="ol">Нумерований</label>
+            <input (click)="addTypeList(ul)" type="radio" name="type" value="ul" id="ul">
+            <label for="ul">Маркований</label>
+          </fieldset>
+          <div class="btn-space" *ngIf="!addList"></div>
+          <div *ngIf="addList">
+            <fieldset class="form">
+              <legend>Параметри списку</legend>
+              <div class="hint countLi"
+                *ngIf="(countLi.dirty && countLi.invalid) || (countLi.touched && countLi.invalid)">Введіть число в
+                діапазоні 1..99</div>
+              <span>Кількість елементів</span>
+              <input type="number" name="countLi" [(ngModel)]="listForm.countLi" #countLi="ngModel" required min="1"
+                max="99">
+              <span>Тип маркування</span>
+              <select name="type" name="selectedType" [(ngModel)]="selectedTypeOl" (change)="onChangeType($event)"
+                *ngIf="isOl">
+                <option *ngFor="let type of listForm.typeLiOl" [value]="type">{{type}}</option>
+              </select>
+              <select name="type" name="selectedType" [(ngModel)]="selectedTypeUl" (change)="onChangeType($event)"
+                *ngIf="isUl">
+                <option *ngFor="let type of listForm.typeLiUl" [value]="type">{{type}}</option>
+              </select>
+            </fieldset>
+            <div class="btn-space">
+              <input type="button" value="Додати" name="createLi" class="btn addBtn" (click)="createList()"
+                *ngIf="countLi.valid">
+            </div>
+          </div>
+        </form>
+      </div>
+    </fieldset>
 
-    <!-- add list -->
-    <div class="my-3 form-list" *ngIf="isList">
-      <form name="form-list">
-        <p>Input count of list items:</p>
-        <input type="number" name="count" class="border-0 border-dark border-bottom w-1" [(ngModel)]="countLi">
-        <div class="inOneRow mt-3">
-          <p>Type of mark:</p>
-          <select name="type" class="form-control w-10" name="selectedType" [(ngModel)]="selectedType"
-            (change)="onChangeType($event)">
-            <option *ngFor="let type of typeLi" [value]="type">{{type}}</option>
-          </select>
+
+    <div class="example">
+      <input type="button" value="Подивитись на приклад" name="create" class="btn btnExample" (click)="Example()">
+      <div class="example-block" *ngIf="closeExample">
+        <div class="top">
+          <input type="button" class="close" (click)="CloseExample()">
         </div>
-        <input type="button" value="Create" name="create" class="btn btn-secondary mt-4" (click)="createList()">
-      </form>
+        <div class="main" [innerHtml]="example | safeHtml">
+        </div>
+      </div>
     </div>
   </div>
+
   <!--block for add style -->
-  <div class="container style-block" *ngIf="isStyle">
+  <div class="style-block" *ngIf="isStyle">
     <form #form="ngForm">
-      <div class="form-size mt-5 mx-auto"><span class="me-3">Font Size:</span>
-        <div *ngFor="let size of fontSizes" class="me-3">
-          <input (click)="SizeStyle(size)" type="radio" name="size" value="{{size}}pt" id="{{size}}"
-            class="form-check-input">
-          <label for="{{size}}" class="form-check-label mx-2">{{size}}pt</label>
+      <fieldset class="form-size">
+        <legend>Розмір шрифту</legend>
+        <div *ngFor="let size of styleForm.fontSize">
+          <input (click)="SizeStyle(size)" type="radio" name="size" value="{{size}}pt" class="form-check-input">
+          <label for="{{size}}" class="form-check-label">{{size}}pt</label>
         </div>
-      </div>
-      <div class="form-family mt-4 mx-auto">
-        <span class="me-4 mt-2">Font Family:</span>
-        <select id="fontFamily" class="form-control" name="selectedQuantity" [(ngModel)]="selectedQuantity"
+      </fieldset>
+      <fieldset class="form-family">
+        <legend>Шрифт</legend>
+        <select class="fontFamily" name="selectedQuantity" [(ngModel)]="selectedQuantity"
           (change)="FamilyStyle($event)">
-          <option *ngFor="let ffamily of fontFamily" [value]="ffamily">{{ffamily}}</option>
+          <option *ngFor="let ffamily of styleForm.fontFamily" [value]="ffamily">{{ffamily}}</option>
         </select>
-      </div>
-      <div class="form-color mt-4 mx-auto">
-        <span class="me-3 mt-1">Colors:</span>
-        <input type="button" value="Color" class="btn btn-secondary me-3" (click)="Color()">
-        <div class="colors" *ngIf="colorBlock">
-          <div *ngFor="let color of colors">
-            <div class="bgcolor-box" [ngClass]="color" (click)="ColorStyle(color)"></div>
-          </div>
+      </fieldset>
+      <fieldset class="form-color" ng-app>
+        <legend>Колір</legend>
+        <span>Background</span>
+        <span class="bgcolor-box">
+          <input type="color" [(ngModel)]="styleForm.bgcolor" name="bgcolor" (change)="BgColorStyle()"></span>
+        <span>Text</span>
+        <span class="color-box">
+          <input type="color" [(ngModel)]="styleForm.color" name="color" (change)="ColorStyle()"></span>
+      </fieldset>
+      <fieldset class="form-style">
+        <legend>Стиль тексту</legend>
+        <div *ngFor="let style of styleForm.textDecor">
+          <label for="{{style}}">{{style}}</label>
+          <input type="checkbox" id="{{style}}" (change)='WeightStyle($event,style)'>
         </div>
-        <input type="button" value="BgColor" class="btn btn-secondary" (click)="bgColor()">
-        <div class="bgcolors" *ngIf="bgcolorBlock">
-          <div *ngFor="let color of colors">
-            <div class="bgcolor-box" [ngClass]="color" (click)="BgColorStyle(color)"></div>
-          </div>
-        </div>
-      </div>
-      <div class="form-style mt-4 mx-auto">
-        <span class="me-3">Style:</span>
-        <div *ngFor="let style of textDecor" class="me-3"> <input type="checkbox" class="form-check-input"
-            id="{{style}}" (change)='WeightStyle($event,style)'>
-          <label for="{{style}}" class="form-check-label mx-2">{{style}} text</label></div>
-      </div>
+      </fieldset>
     </form>
   </div>
 </div>
